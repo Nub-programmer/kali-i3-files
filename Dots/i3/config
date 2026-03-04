@@ -1,1 +1,128 @@
+# ==============================
+#  KALI TOKYO NIGHT STABLE RICE
+# ==============================
 
+set $mod Mod4
+floating_modifier $mod
+font pango:monospace 10
+
+# ------------------------------
+# TOUCHPAD FIX (SOFT TAP)
+# ------------------------------
+exec_always --no-startup-id xinput set-prop "$(xinput list | grep -i touchpad | cut -d= -f2 | cut -f1)" "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput set-prop "$(xinput list | grep -i touchpad | cut -d= -f2 | cut -f1)" "libinput Tapping Enabled Default" 1
+exec_always --no-startup-id xinput set-prop "$(xinput list | grep -i touchpad | cut -d= -f2 | cut -f1)" "libinput Natural Scrolling Enabled" 1
+
+# ------------------------------
+# STARTUP APPS
+# ------------------------------
+exec --no-startup-id nm-applet
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+exec_always --no-startup-id feh --bg-fill $HOME/Pictures/wallpapers/astronaut.jpg
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# ------------------------------
+# TERMINAL + LAUNCHER
+# ------------------------------
+bindsym $mod+Return exec terminator
+bindsym $mod+d exec rofi -show drun
+
+# ------------------------------
+# WINDOW CONTROLS
+# ------------------------------
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c reload
+
+# Floating toggle
+bindsym $mod+Shift+space floating toggle
+
+# Scratchpad (MINIMIZE)
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# ------------------------------
+# WORKSPACES
+# ------------------------------
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# ------------------------------
+# AUDIO KEYS
+# ------------------------------
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# ------------------------------
+# GNOME STYLE SCREENSHOTS
+# ------------------------------
+
+# Full screen → save
+bindsym Shift+Print exec flameshot full -p ~/Pictures/Screenshots
+
+# Selection → copy + save
+bindsym Print exec flameshot gui -c -p ~/Pictures/Screenshots
+
+# Active window → save
+bindsym Ctrl+Print exec flameshot screen -p ~/Pictures/Screenshots
+
+# ------------------------------
+# FLOATING RULES (IMPORTANT)
+# ------------------------------
+for_window [class="Conky"] floating enable
+for_window [class="Conky"] border none
+for_window [class="Conky"] move position 20 px 40 px
+for_window [class="Conky"] sticky enable
+
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Pavucontrol"] floating enable
+
+# ------------------------------
+# GAPS + BORDERS
+# ------------------------------
+for_window [class="^.*"] border pixel 2
+
+gaps inner 15
+gaps outer 5
+
+smart_gaps on
+hide_edge_borders smart
+
+# ------------------------------
+# COLORS (TOKYO NIGHT)
+# ------------------------------
+client.focused          #bb9af7 #bb9af7 #1a1b26 #7aa2f7
+client.unfocused        #1a1b26 #1a1b26 #a9b1d6 #1a1b26
+client.focused_inactive #292e42 #292e42 #a9b1d6 #292e42
+client.urgent           #f7768e #f7768e #1a1b26 #f7768e
